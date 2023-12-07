@@ -12,10 +12,14 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        key: _globalKey,
         backgroundColor: const Color(0xff171717),
         body: Stack(
           children: [
@@ -26,7 +30,9 @@ class _HomepageState extends State<Homepage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _globalKey.currentState!.openDrawer();
+                        },
                         icon: const Icon(
                           Icons.menu_rounded,
                           color: Colors.white,
@@ -227,6 +233,82 @@ class _HomepageState extends State<Homepage> {
             child: const Icon(Icons.edit_outlined),
           ),
         ),
+        drawer: Drawer(
+          width: 270,
+          backgroundColor: Color(0xff171717),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 56,
+                    ),
+                    Text(
+                      'Settings',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    )
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('assets/img8.jpg'),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'Allana Holmes',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w200),
+                    )
+                  ],
+                ),
+              ),
+              const drawerrows(
+                name: 'Account',
+                icon: Icons.key,
+              ),
+              const drawerrows(
+                name: 'Messages',
+                icon: Icons.chat_bubble,
+              ),
+              const drawerrows(
+                name: 'Notifications',
+                icon: Icons.notifications_active_outlined,
+              ),
+              const drawerrows(
+                name: 'Data and Storage',
+                icon: Icons.storage_rounded,
+              ),
+              const drawerrows(
+                name: 'Help',
+                icon: Icons.help,
+              ),
+              Divider(
+                color: Colors.green.shade400,
+                indent: 20,
+                endIndent: 20,
+              ),
+              const drawerrows(
+                name: 'Invite a Friend',
+                icon: Icons.people,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -247,6 +329,38 @@ class _HomepageState extends State<Homepage> {
           Text(
             name,
             style: const TextStyle(color: Colors.white, fontSize: 13),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class drawerrows extends StatelessWidget {
+  const drawerrows({
+    super.key,
+    required this.name,
+    required this.icon,
+  });
+  final String name;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 56,
+          ),
+          Text(
+            name,
+            style: TextStyle(color: Colors.white, fontSize: 15),
           )
         ],
       ),
